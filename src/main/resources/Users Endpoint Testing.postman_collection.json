@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "c4861f82-3350-40e4-9464-d83d3f54555d",
+		"name": "Users Endpoint Testing",
+		"description": "Tensting \"Users\" endpoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "usersSuccessfulRegistration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"newGuy\",\r\n    \"password\": \"rubberduck\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/user/register",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"register"
+					]
+				},
+				"description": "Scenario Outline: Successful registration attempt\r\nGiven: setting login: newGuy and password: rubberduck\r\nWhen: sending POST request to /user/register\r\nThen: I should get user ID: 421, and confirmation that the user is new - \"true\""
+			},
+			"response": []
+		},
+		{
+			"name": "usersUnsuccessfulRegistration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"newGuy\",\r\n    \"password\": \"rubberduck\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/user/register",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"register"
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful registration attempt\r\nGiven: setting login: newGuy and password: rubberduck (both used before)\r\nWhen: sending POST request to /user/register\r\nThen: I should get back user ID: 421, and denied that the user is new - \"false\""
+			},
+			"response": []
+		},
+		{
+			"name": "successfulUserLogIn",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"newGuy\",\r\n    \"password\": \"rubberduck\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/user/login",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "Scenario Outline: Trying to log in when user is registered\r\nGiven: login: newGuy and password: rubberduck\r\nWhen: sending POST request to /user/login\r\nThen: I should get user ID: 421"
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulUserLogInCase1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"oldGuy\",\r\n    \"password\": \"rubberduck\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/user/login",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "Scenario Outline: Trying to log in when user is registered with improper login and proper password\r\nGiven: login: oldGuy, password: rubberduck\r\nWhen: sending POST request to /user/login\r\nThen: I should get \"-1\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulUserLogInCase2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"newGuy\",\r\n    \"password\": \"woodenduck\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/user/login",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "Scenario Outline: Trying to log in when user is registered, with proper login and improper password\r\nGiven: login: newGuy, password: woodenduck\r\nWhen: sending POST request to /user/login\r\nThen: I should get \"-1\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulUserLogInCase3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"oldGuy\",\r\n    \"password\": \"woodenduck\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/user/login",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "Scenario Outline: Trying to log in when user is registered, with both improper login and password\r\nGiven: login: oldGuy, password: woodenduck\r\nWhen: sending POST request to /user/login\r\nThen: I should get \"-1\""
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b4413dbf-a72d-4675-923f-ca86bb7b5117",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d84801d8-1e46-4c7e-8395-b26bfe7b6b22",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

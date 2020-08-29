@@ -1,0 +1,602 @@
+{
+	"info": {
+		"_postman_id": "ea5b314b-7f9f-42d9-90b8-53fc6dd5dd6b",
+		"name": "Rents Endpoint Testing",
+		"description": "Testing \"rents\" endpoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "successfulUserLogIn",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"newGuy\",\r\n    \"password\": \"rubberduck\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/user/login",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "Scenario Outline: Trying to log in when user is registered\r\nGiven: login: newGuy and password: rubberduck\r\nWhen: sending POST request to /user/login\r\nThen: I should get user ID: 421"
+			},
+			"response": []
+		},
+		{
+			"name": "successfulTitleCreation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{       \"userId\": 421,\r\n        \"author\": \"Aristotle\",\r\n        \"title\": \"Politics\",\r\n        \"year\": 2020\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					]
+				},
+				"description": "Scenario Outline: Successful title creation\r\nGiven: user ID: 421, setting author: Aristotle, title: Politics, year: 2020\r\nWhen: sending POST request to /titles\r\nThen: I should get title ID: 422"
+			},
+			"response": []
+		},
+		{
+			"name": "successfulItemCreation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{       \"userId\": 4210,\r\n        \"titleId\": 422,\r\n        \"purchaseDate\": \"2020-06-23\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&titleId=422",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "titleId",
+							"value": "422"
+						}
+					]
+				},
+				"description": "Scenario Outline: Successful item creation\r\nGiven: user ID 421, title ID: 422, setting setting date of purchase: 2020-06-23\r\nWhen: sending POST request to items/?userId=421&titleId=422\r\nThen: I should get item ID: 427, purchase date: 2020-06-23, status: AVAILABLE"
+			},
+			"response": []
+		},
+		{
+			"name": "successfulRentCreation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \"userId\": 421,\r\n    \"itemId\": 427,\r\n    \"customerName\": \"Zbyszko z Bogdańca\",\r\n    \"rentDate\": \"2020-08-26\",\r\n    \"expirationDate\": \"2020-09-02\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=421&itemId=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "itemId",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Successful rent creation\r\nGiven: userId: 421, itemId: 427, setting customerName: Zbyszko z Bogdańca, rentDate: 2020-08-26, expirationDate: 2020-09-02\r\nWhen: sending POST request to rents/?userId=421&itemId=427\r\nThen: I should get rent ID: 428, customerName: Zbyszko z Bogdańca, rentDate: 2020-08-26, expirationDate: 2020-09-02"
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulRentCreationCase1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \"userId\": 421,\r\n    \"itemId\": 427,\r\n    \"customerName\": \"Zbyszko z Bogdańca\",\r\n    \"rentDate\": \"2020-08-26\",\r\n    \"expirationDate\": \"2020-09-02\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=421&itemId=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "itemId",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful rent creation with improper user ID and proper item ID\r\nGiven: user ID 4210, item ID: 427, 427, setting customerName: Zbyszko z Bogdańca, rentDate: 2020-08-26, expirationDate: 2020-09-02\r\nWhen: sending POST request to rents/?userId=421&itemId=427\r\nThen: I should get message \"User 4210 doesn't exist.\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulRentCreationCase2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \"userId\": 421,\r\n    \"itemId\": 427,\r\n    \"customerName\": \"Zbyszko z Bogdańca\",\r\n    \"rentDate\": \"2020-08-26\",\r\n    \"expirationDate\": \"2020-09-02\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=421&itemId=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "itemId",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful rent creation with proper user ID and improper item ID\r\nGiven: user ID 421, item ID: 4270, 427, setting customerName: Zbyszko z Bogdańca, rentDate: 2020-08-26, expirationDate: 2020-09-02\r\nWhen: sending POST request to rents/?userId=421&itemId=427\r\nThen: I should get message  \"There is no item id=4270 for user id=421\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulRentCreationCase3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \"userId\": 421,\r\n    \"itemId\": 427,\r\n    \"customerName\": \"Zbyszko z Bogdańca\",\r\n    \"rentDate\": \"2020-08-26\",\r\n    \"expirationDate\": \"2020-09-02\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=421&itemId=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "itemId",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful rent creation with both improper user ID and item ID\r\nGiven: user ID 4210, item ID: 4270, setting customerName: Zbyszko z Bogdańca, rentDate: 2020-08-26, expirationDate: 2020-09-02\r\nWhen: sending POST request to rents/?userId=421&itemId=427\r\nThen: I should get message  \"User 4210 doesn't exist.\""
+			},
+			"response": []
+		},
+		{
+			"name": "successfulRentsDisplay",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=421&itemId=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "itemId",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Successful rent display\r\nGiven: user ID 421, item ID: 427\r\nWhen: sending GET request to rents/?userId=421&itemId=427\r\nThen: I should get rent ID: 428, customerName: Zbyszko z Bogdańca, rentDate: 2020-08-26, expirationDate: 2020-09-02"
+			},
+			"response": []
+		},
+		{
+			"name": "successfulRentUpdate",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 421,\r\n    \"id\": 428,\r\n    \"customerName\": \"Zbyszko z Bogdańca\",\r\n    \"rentDate\": \"2020-08-26\",\r\n    \"expirationDate\": \"2020-09-12\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=421&Id=428",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "Id",
+							"value": "428"
+						}
+					]
+				},
+				"description": "Scenario Outline: Successful rent display\r\nGiven: user ID 421, item ID: 427\r\nWhen: sending GET request to rents/?userId=421&itemId=427\r\nThen: I should get rent ID: 428, customerName: Zbyszko z Bogdańca, rentDate: 2020-08-26, expirationDate: 2020-09-02"
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulRentUpdateCase1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 421,\r\n    \"id\": 428,\r\n    \"customerName\": \"Zbyszko z Bogdańca\",\r\n    \"rentDate\": \"2020-08-26\",\r\n    \"expirationDate\": \"2020-09-12\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=421&Id=428",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "Id",
+							"value": "428"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful rent update with improper user ID and proper rent ID\r\nGiven: userId: 4210, rentId: 428, setting customerName: Zbyszko z Bogdańca, rentDate: 2020-08-26, expirationDate: 2020-09-12\r\nWhen: sending PUT request to rents/?userId=421&itemId=427\r\nThen: I should get message  \"User 4210 doesn't exist.\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulRentUpdateCase2",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 421,\r\n    \"id\": 428,\r\n    \"customerName\": \"Zbyszko z Bogdańca\",\r\n    \"rentDate\": \"2020-08-26\",\r\n    \"expirationDate\": \"2020-09-12\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=421&Id=428",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "Id",
+							"value": "428"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful rent update with proper user ID and improper rent ID\r\nGiven: userId: 421, rentId: 4280, setting customerName: Zbyszko z Bogdańca, rentDate: 2020-08-26, expirationDate: 2020-09-12\r\nWhen: sending PUT request to rents/?userId=421&itemId=427\r\nThen: I should get message \"Rent id=4280 for user id=421 doesn't exist.\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulRentUpdateCase3",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 421,\r\n    \"id\": 428,\r\n    \"customerName\": \"Zbyszko z Bogdańca\",\r\n    \"rentDate\": \"2020-08-26\",\r\n    \"expirationDate\": \"2020-09-12\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=421&Id=428",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "Id",
+							"value": "428"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful rent update with both improper user ID rent ID\r\nGiven: userId: 4210, rentId: 4280, setting customerName: Zbyszko z Bogdańca, rentDate: 2020-08-26, expirationDate: 2020-09-12\r\nWhen: sending PUT request to rents/?userId=421&itemId=427\r\nThen: I should get message  \"User 4210 doesn't exist.\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulRentDeleteCase1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=4210&id=429",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "4210"
+						},
+						{
+							"key": "id",
+							"value": "429"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful deleting rent with proper user ID and improper rent ID\r\nGiven: user ID: 421, item ID: 4280\r\nWhen: sending DELETE request to rents/?userId=421&id=428\r\nThen: I should get “false”"
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulRentDeleteCase2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=4210&id=429",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "4210"
+						},
+						{
+							"key": "id",
+							"value": "429"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful deleting rent with improper user ID and proper rent ID\r\nGiven: user ID: 4210, rent ID: 428\r\nWhen: sending DELETE request to rents/?userId=421&id=428\r\nThen: I should get message \"User 4210 doesn't exist.\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulRentDeleteCase3",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=4210&id=429",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "4210"
+						},
+						{
+							"key": "id",
+							"value": "429"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful deleting rent with both improper user ID and rent ID\r\nGiven: user ID: 4210, rent ID: 428\r\nWhen: sending DELETE request to rents/?userId=421&id=428\r\nThen: I should get message \"User 4210 doesn't exist.\""
+			},
+			"response": []
+		},
+		{
+			"name": "successfulRentDelete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/rents/?userId=4210&id=429",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rents",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "4210"
+						},
+						{
+							"key": "id",
+							"value": "429"
+						}
+					]
+				},
+				"description": "Scenario Outline: Successful deleting rent\r\nGiven: user ID 421, rent ID: 428\r\nWhen: sending DELETE request to rents/?userId=421&id=428\r\nThen: I should get \"true\""
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

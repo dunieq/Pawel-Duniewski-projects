@@ -1,0 +1,420 @@
+{
+	"info": {
+		"_postman_id": "ba544053-34fb-446f-9ed8-ddd7639c5ed5",
+		"name": "Titles Endpoint Testing",
+		"description": "Testing \"titles\" endpoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "successfulUserLogIn",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"newGuy\",\r\n    \"password\": \"rubberduck\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/user/login",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "Scenario Outline: Trying to log in when user is registered\r\nGiven: login: newGuy and password: rubberduck\r\nWhen: sending POST request to /user/login\r\nThen: I should get user ID: 421"
+			},
+			"response": []
+		},
+		{
+			"name": "successfulTitleCreation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{       \"userId\": 421,\r\n        \"author\": \"Aristotle\",\r\n        \"title\": \"Politics\",\r\n        \"year\": 2020\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					]
+				},
+				"description": "Scenario Outline: Successful title creation\r\nGiven: user ID: 421, setting author: Aristotle, title: Politics, year: 2020\r\nWhen: sending POST request to /titles\r\nThen: I should get title ID: 422"
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulTitleCreation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{       \"userId\": 421,\r\n        \"author\": \"Aristotle\",\r\n        \"title\": \"Politics\",\r\n        \"year\": 2020\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful title creating when user ID is improper\r\nGiven: user ID: 4210, setting author: Aristotle, title: Politics, year: 2020\r\nWhen: sending POST request to /titles\r\nThen: I should get message \"User 4210 doesn't exist.\""
+			},
+			"response": []
+		},
+		{
+			"name": "successfulTitlesDisplay",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "86e54104-4440-4e19-bcc6-75e8ce928ecb",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/?userId=421",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						}
+					]
+				},
+				"description": "Scenario Outline: Successful title displaying\r\nGiven: user ID 421\r\nWhen: sending GET request to titles/?userId=421\r\nThen: I should get title ID: 422, author: Aristotle, title: Politics, year: 2020"
+			},
+			"response": []
+		},
+		{
+			"name": "successfulTitleUpdate",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"userId\": 421,\r\n        \"id\": 422,\r\n        \"author\": \"Arystoteles\",\r\n        \"title\": \"Polityka\",\r\n        \"year\": 2019\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/?userId=421",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						}
+					]
+				},
+				"description": "Scenario Outline: Successful title update\r\nGiven: user ID 421, title ID: 422, author: Arystoteles, title: Polityka, year: 2019\r\nWhen: sending PUT request to titles/?userId=421\r\nThen: changes take effect, I should get title ID: 422, author: Arystoteles, title: Politityka, year: 2019"
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulTitleUpdateCase1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"userId\": 421,\r\n        \"id\": 422,\r\n        \"author\": \"Arystoteles\",\r\n        \"title\": \"Polityka\",\r\n        \"year\": 2019\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/?userId=421",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful title update with improper user ID and proper title ID\r\nGiven: user ID 4210, title ID: 422, author: Arystoteles, title: Politityka, year: 2019\r\nWhen: sending PUT request to titles/?userId=421\r\nThen: I should get message \"User 4210 doesn't exist.\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulTitleUpdateCase2",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"userId\": 421,\r\n        \"id\": 422,\r\n        \"author\": \"Arystoteles\",\r\n        \"title\": \"Polityka\",\r\n        \"year\": 2019\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/?userId=421",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful title update with proper user ID and improper title ID\r\nGiven: user ID 421, title ID: 4220, author: Arystoteles, title: Politityka, year: 2019\r\nWhen: sending PUT request to titles/?userId=421\r\nThen: I should get message \"There is no book with id=4220 created by user with id=421\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulTitleUpdateCase3",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"userId\": 421,\r\n        \"id\": 422,\r\n        \"author\": \"Arystoteles\",\r\n        \"title\": \"Polityka\",\r\n        \"year\": 2019\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/?userId=421",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful title update with both improper user ID and title ID\r\nGiven: user ID 4210, title ID: 4220, author: Arystoteles, title: Politityka, year: 2019\r\nWhen: sending PUT request to titles/?userId=421\r\nThen: I should get message \"User 4210 doesn't exist.\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulTitleDeleteCase1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/?userId=421&id=424",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "id",
+							"value": "424"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful deleting title with proper user ID and improper title ID\r\nGiven: user ID: 421, title ID: 4220\r\nWhen: sending DELETE request to titles/?userId=421\r\nThen: I should get \"false\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulTitleDeleteCase2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/?userId=421&id=424",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "id",
+							"value": "424"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful deleting title with improper user ID and proper title ID\r\nGiven: user ID: 4210, title ID: 422\r\nWhen: sending DELETE request to titles/?userId=421\r\nThen: I should get \"false\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulTitleDeleteCase3",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/?userId=421&id=424",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "id",
+							"value": "424"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful deleting title with both improper user ID and title ID\r\nGiven: user ID: 4210, title ID: 4220\r\nWhen: sending DELETE request to titles/?userId=421\r\nThen: I should get \"false\""
+			},
+			"response": []
+		},
+		{
+			"name": "successfulTitleDelete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/?userId=421&id=424",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "id",
+							"value": "424"
+						}
+					]
+				},
+				"description": "Scenario Outline: Successful deleting title\r\nGiven: user ID 421, title ID: 422\r\nWhen: sending DELETE request to titles/?userId=421\r\nThen: I should get \"true\""
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

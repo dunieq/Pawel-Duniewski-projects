@@ -1,0 +1,619 @@
+{
+	"info": {
+		"_postman_id": "3bce8964-8523-42f5-9059-3671d421b0c5",
+		"name": "Items Endpoint Testing",
+		"description": "Testing \"items\" endpoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "successfulUserLogIn",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"newGuy\",\r\n    \"password\": \"rubberduck\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/user/login",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "Scenario Outline: Trying to log in when user is registered\r\nGiven: login: newGuy and password: rubberduck\r\nWhen: sending POST request to /user/login\r\nThen: I should get user ID: 421"
+			},
+			"response": []
+		},
+		{
+			"name": "successfulTitleCreation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{       \"userId\": 421,\r\n        \"author\": \"Aristotle\",\r\n        \"title\": \"Politics\",\r\n        \"year\": 2020\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/titles/",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"titles",
+						""
+					]
+				},
+				"description": "Scenario Outline: Successful title creation\r\nGiven: user ID: 421, setting author: Aristotle, title: Politics, year: 2020\r\nWhen: sending POST request to /titles\r\nThen: I should get title ID: 422"
+			},
+			"response": []
+		},
+		{
+			"name": "successfulItemCreation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{       \"userId\": 4210,\r\n        \"titleId\": 422,\r\n        \"purchaseDate\": \"2020-06-23\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&titleId=422",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "titleId",
+							"value": "422"
+						}
+					]
+				},
+				"description": "Scenario Outline: Successful item creation\r\nGiven: user ID 421, title ID: 422, setting setting date of purchase: 2020-06-23\r\nWhen: sending POST request to items/?userId=421&titleId=422\r\nThen: I should get item ID: 427, purchase date: 2020-06-23, status: AVAILABLE"
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulItemCreationCase1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{       \"userId\": 4210,\r\n        \"titleId\": 422,\r\n        \"purchaseDate\": \"2020-06-23\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&titleId=422",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "titleId",
+							"value": "422"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful item creation with improper user ID and proper title ID\r\nGiven: user ID 4210, title ID: 422, setting date of purchase: 2020-06-23\r\nWhen: sending POST request to items/?userId=421&titleId=422\r\nThen: I should get message \"User 4210 doesn't exist.\"\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulItemCreationCase2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{       \"userId\": 4210,\r\n        \"titleId\": 422,\r\n        \"purchaseDate\": \"2020-06-23\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&titleId=422",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "titleId",
+							"value": "422"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful item creation with proper user ID and improper title ID\r\nGiven: user ID 421, title ID: 4220, setting date of purchase: 2020-06-23\r\nWhen: sending POST request to items/?userId=421&titleId=422\r\nThen: I should get message \"There is no book with id=4220 created by user with id=421\"\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulItemCreationCase3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{       \"userId\": 4210,\r\n        \"titleId\": 422,\r\n        \"purchaseDate\": \"2020-06-23\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&titleId=422",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "titleId",
+							"value": "422"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful item creation with both improper user ID and title ID\r\nGiven: user ID 4210, title ID: 4220, , setting date of purchase: 2020-06-23\r\nWhen: sending POST request to items/?userId=421&titleId=422\r\nThen: I should get message \"User 4210 doesn't exist.\"\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "successfulItemsDisplay",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&titleId=422",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "titleId",
+							"value": "422"
+						}
+					]
+				},
+				"description": "Scenario Outline: Successful item display\r\nGiven: user ID 421, title ID: 422\r\nWhen: sending GET request to items/?userId=421&titleId=422\r\nThen: I should get item ID: 427, purchase date\": 2020-06-23, status: AVAILABLE"
+			},
+			"response": []
+		},
+		{
+			"name": "successfulItemUpdate",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"userId\": 421,\r\n    \"id\": 427, \r\n    \"purchaseDate\": \"2020-07-11\",\r\n    \"status\": \"AVAILABLE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&id=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "id",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Successful item update\r\nGiven: user ID 421, item ID: 427, setting new purchase date: 2020-07-11\r\nWhen: sending PUT request to items/?userId=421&id=427\r\nThen: changes take effect, i should get item ID: 427, purchase date: 2020-07-11"
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulItemUpdateCase1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"userId\": 421,\r\n    \"id\": 427, \r\n    \"purchaseDate\": \"2020-07-11\",\r\n    \"status\": \"AVAILABLE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&id=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "id",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful item update with improper user ID and proper item ID\r\nGiven: user ID 4210, item ID: 427, purchaseDate: 2020-07-11\r\nWhen: sending PUT request to items/?userId=421&id=427\r\nThen: I should get message \"User 4210 doesn't exist.\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulItemUpdateCase2",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"userId\": 421,\r\n    \"id\": 427, \r\n    \"purchaseDate\": \"2020-07-11\",\r\n    \"status\": \"AVAILABLE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&id=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "id",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful item update with proper user ID and improper item ID\r\nGiven: user ID 421, item ID: 4270, purchaseDate: 2020-07-11\r\nWhen: sending PUT request to titles/?userId=421\r\nThen: I should get message \"There is no item id=4270 for user id=421\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulItemUpdateCase3",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"userId\": 421,\r\n    \"id\": 427, \r\n    \"purchaseDate\": \"2020-07-11\",\r\n    \"status\": \"AVAILABLE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&id=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "id",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful item update with both improper user ID and item ID\r\nGiven: user ID 4210, item ID: 4270, purchaseDate: 2020-07-11\r\nWhen: sending PUT request to items/?userId=421&id=427\r\nThen: I should get message \"User 4210 doesn't exist.\""
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulItemDeleteCase1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&id=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "id",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful deleting item with proper user ID and improper item ID\r\nGiven: user ID: 421, item ID: 4270\r\nWhen: sending DELETE request to items/?userId=421&id=427\r\nThen: I should message \"There is no item id=4270 for user id=421\"\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulItemDeleteCase2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&id=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "id",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful deleting item with improper user ID and proper item ID\r\nGiven: user ID: 4210, item ID: 427\r\nWhen: sending DELETE request to items/?userId=421&id=427\r\nThen: I should get message \"User 4210 doesn't exist.\"\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccessfulItemDeleteCase3",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&id=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "id",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Unsuccessful deleting item with both improper user ID and item ID\r\nGiven: user ID: 4210, item ID: 4270\r\nWhen: sending DELETE request to items/?userId=421&id=427\r\nThen: I should get message \"User 4210 doesn't exist.\"\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "successfulItemDelete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://ta-ebookrental-be.herokuapp.com/items/?userId=421&id=427",
+					"protocol": "https",
+					"host": [
+						"ta-ebookrental-be",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"items",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "421"
+						},
+						{
+							"key": "id",
+							"value": "427"
+						}
+					]
+				},
+				"description": "Scenario Outline: Successful deleting item\r\nGiven: user ID 421, item ID: 427\r\nWhen: sending DELETE request to items/?userId=421&id=427\r\nThen: I should get \"true\"\r\n"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "bcc20860-e6f9-4cbe-916c-a06bbb3f1926",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "46d41d40-9c71-4558-9c4d-3e37f3ca2963",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
